@@ -9,6 +9,7 @@ export abstract class Controller {
         } catch (error) {
             console.error('[BaseController]: Uncaught controller error')
             console.error(error)
+            this.fail(res, error as any)
         }
     }
     

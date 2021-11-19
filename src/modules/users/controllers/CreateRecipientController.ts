@@ -27,26 +27,22 @@ export class CreateRecipientController extends Controller {
             password
         }
 
-        try {
-            const result = await this.useCase.execute(dto)
+        const result = await this.useCase.execute(dto)
 
-            if (result.isLeft()) {
-                const error = result.value
+        if (result.isLeft()) {
+            const error = result.value
 
-                switch(error.constructor) {
-                    case CreateUserErrors.InvalidParam: {
-                        this.clientError(res, error.errorValue().message)
-                        break
-                    }
-                    default: {
-                        this.fail(res, error.errorValue().message)
-                    }
+            switch(error.constructor) {
+                case CreateUserErrors.InvalidParam: {
+                    this.clientError(res, error.errorValue().message)
+                    break
                 }
-            } else {
-                this.ok(res)
+                default: {
+                    this.fail(res, error.errorValue().message)
+                }
             }
-        } catch (error: any) {
-            this.fail(res, error)
+        } else {
+            this.ok(res, )
         }
     }
 }
