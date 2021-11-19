@@ -1,9 +1,9 @@
-import { CreateUserController } from './CreateUserController'
+import { CreateRecipientController } from './CreateRecipientController'
 
-import { createUserUseCase } from '@users/useCases'
+import { createRecipientUseCase } from '@users/useCases'
 
-const createUserController = new CreateUserController(createUserUseCase)
+const createRecipientController = new CreateRecipientController(createRecipientUseCase)
 
 export {
-    createUserController
+    createRecipientController
 }

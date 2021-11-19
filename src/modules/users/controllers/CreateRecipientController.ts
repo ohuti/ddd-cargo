@@ -2,14 +2,14 @@ import { Request, Response } from 'express'
 
 import { Controller } from '@shared/core/Controller'
 
-import { CreateUserUseCase } from '@users/useCases/createUser/CreateUserUseCase'
+import { CreateRecipientUseCase } from '@users/useCases/createRecipientUser/CreateRecipientUseCase'
 import { CreateUserDTO } from '@users/adapters/CreateUserDTO'
-import { CreateUserErrors } from '@users/useCases/createUser/CreateUserErrors'
+import { CreateUserErrors } from '@users/useCases/CreatetUserErrors'
 
-export class CreateUserController extends Controller {
-    private useCase: CreateUserUseCase
+export class CreateRecipientController extends Controller {
+    private useCase: CreateRecipientUseCase
 
-    constructor(useCase: CreateUserUseCase) {
+    constructor(useCase: CreateRecipientUseCase) {
         super()
         this.useCase = useCase
     }
@@ -19,14 +19,12 @@ export class CreateUserController extends Controller {
             name,
             email,
             password,
-            fail
         } = req.body
 
         const dto: CreateUserDTO = {
             name,
             email,
-            password,
-            fail
+            password
         }
 
         try {
@@ -36,8 +34,9 @@ export class CreateUserController extends Controller {
                 const error = result.value
 
                 switch(error.constructor) {
-                    case CreateUserErrors.EmailAlreadyExists: {
-                        this.conflict(res, error.errorValue().message)
+                    case CreateUserErrors.InvalidParam: {
+                        this.clientError(res, error.errorValue().message)
+                        break
                     }
                     default: {
                         this.fail(res, error.errorValue().message)

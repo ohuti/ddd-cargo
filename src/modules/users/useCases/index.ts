@@ -1,7 +1,7 @@
-import { CreateUserUseCase } from './createUser/CreateUserUseCase'
+import { CreateRecipientUseCase } from './createRecipientUser/CreateRecipientUseCase'
 
-const createUserUseCase = new CreateUserUseCase()
+const createRecipientUseCase = new CreateRecipientUseCase()
 
 export {
-    createUserUseCase
+    createRecipientUseCase
 }

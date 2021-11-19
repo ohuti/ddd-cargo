@@ -25,7 +25,6 @@ export abstract class Controller {
     }
 
     fail (res: express.Response, error: Error | string) {
-        console.log(error)
         return res.status(500).json({
             message: error.toString()
         })
@@ -36,7 +35,7 @@ export abstract class Controller {
     }
     
     public clientError (res: express.Response, message?: string) {
-        return Controller.jsonResponse(res, 400, message ? message : 'Unauthorized')
+        return Controller.jsonResponse(res, 400, message ? message : 'Bad Request')
     }
     
     public unauthorized (res: express.Response, message?: string) {
