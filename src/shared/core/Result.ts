@@ -43,4 +43,18 @@ export class Result<T> {
     static fail<U> (error: string): Result<U> {
         return new Result<U>(false, error)
     }
+    
+    public static combine (results: Result<any>[]) : Result<any> {
+        const errors: string[] = []
+
+        for (let result of results) {
+            if (result.isFailure) errors.push(result.error)
+        }
+
+        if (errors.length > 0) {
+            return new Result(false, errors)
+        }
+
+        return Result.ok()
+    }
 }

@@ -1,10 +1,10 @@
-import { Client } from '@users/domain/Client'
+import { User } from '@users/domain/User'
 
-export class UserMapper implements Mapper<Client> {
-    toDomain(data: any): Client {
+export class UserMapper implements Mapper<User> {
+    toDomain(data: any): User {
         throw new Error('Method not implemented.');
     }
-    toDTO(object: Client) {
+    toDTO(object: User) {
         throw new Error('Method not implemented.');
     }
 }

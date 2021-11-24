@@ -4,7 +4,7 @@ import { Controller } from '@shared/core/Controller'
 
 import { CreateUserUseCase } from '@users/useCases/createUser/CreateUserUseCase'
 import { CreateUserDTO } from '@users/adapters/CreateUserDTO'
-import { CreateUserErrors } from '@users/useCases/CreatetUserErrors'
+import { CreateUserErrors } from '@users/useCases/createUser/CreatetUserErrors'
 
 export class CreateUserController extends Controller {
     private useCase: CreateUserUseCase
@@ -14,17 +14,19 @@ export class CreateUserController extends Controller {
         this.useCase = useCase
     }
 
-    protected async executeImpl(req: Request, res: Response): Promise<void> {
+    protected async executeImpl(req: Request, res: Response): Promise<any> {
         const {
             name,
             email,
             password,
+            occupation
         } = req.body
 
         const dto: CreateUserDTO = {
             name,
             email,
-            password
+            password,
+            occupation
         }
 
         const result = await this.useCase.execute(dto)
@@ -34,15 +36,17 @@ export class CreateUserController extends Controller {
 
             switch(error.constructor) {
                 case CreateUserErrors.InvalidParam: {
-                    this.clientError(res, error.errorValue().message)
-                    break
+                    return this.clientError(res, error.errorValue().message)
+                }
+                case CreateUserErrors.AdminCreationNotAllowed: {
+                    return this.clientError(res, error.errorValue().message)
                 }
                 default: {
-                    this.fail(res, error.errorValue().message)
+                    return this.fail(res, error.errorValue().message)
                 }
             }
         } else {
-            this.ok(res, )
+            return this.ok(res)
         }
     }
 }
