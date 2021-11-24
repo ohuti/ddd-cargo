@@ -15,10 +15,8 @@ export namespace CreateUserErrors {
         }
     }
 
-    export class FailedToCreateRecipient extends Result<UseCaseError> {
-        constructor(error: any) {
-            const message = 'Não foi possível criar o usuário'
-            console.error(`[CreateRecipientUseCase]: ${error}`)
+    export class EmailAlreadyRegistered extends Result<UseCaseError> {
+        constructor(message: any) {
             super(false, { message })
         }
     }

@@ -41,6 +41,9 @@ export class CreateUserController extends Controller {
                 case CreateUserErrors.AdminCreationNotAllowed: {
                     return this.clientError(res, error.errorValue().message)
                 }
+                case CreateUserErrors.EmailAlreadyRegistered: {
+                    return this.conflict(res, error.errorValue().message)
+                }
                 default: {
                     return this.fail(res, error.errorValue().message)
                 }

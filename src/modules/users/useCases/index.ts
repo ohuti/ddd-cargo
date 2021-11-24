@@ -1,6 +1,8 @@
 import { CreateUserUseCase } from './createUser/CreateUserUseCase'
 
-const createUserUseCase = new CreateUserUseCase()
+import { userRepo } from '@users/repos'
+
+const createUserUseCase = new CreateUserUseCase(userRepo)
 
 export {
     createUserUseCase

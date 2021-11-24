@@ -4,7 +4,8 @@ import { CreateUserErrors } from '@users/useCases/createUser/CreatetUserErrors'
 
 export type CreateUserResponse = Either<
     CreateUserErrors.InvalidParam |
-    CreateUserErrors.FailedToCreateRecipient |
+    CreateUserErrors.EmailAlreadyRegistered |
+    CreateUserErrors.AdminCreationNotAllowed |
     Result<any>,
     Result<void>
 >
