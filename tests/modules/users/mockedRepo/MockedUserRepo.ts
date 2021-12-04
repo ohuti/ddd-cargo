@@ -1,6 +1,7 @@
-import { User } from '@users/domain/User'
-import { UserEmail } from '@users/domain/UserEmail'
-import { IUserRepo } from '@users/repos/UserRepo'
+import { User } from '@userDomain/User'
+import { UserEmail } from '@userDomain/UserEmail'
+
+import { IUserRepo } from '@repos/user/IUserRepo'
 
 const registeredUsers = [
     {

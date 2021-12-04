@@ -20,11 +20,18 @@
 		"scope": "javascript,typescript",
 		"prefix": "entity",
 		"body": [
-			"import { Entity } from \"@shared/core/Entity\"",
+			"import { Result } from '@shared/core/Result'",
+			"import { Entity } from '@shared/domain/Entity'",
 			"",
 			"interface ${TM_FILENAME_BASE}Props {}",
 			"",
-			"export class ${TM_FILENAME_BASE} extends Entity<${TM_FILENAME_BASE}Props> {}",
+			"export class ${TM_FILENAME_BASE} extends Entity<${TM_FILENAME_BASE}Props> {",
+			"    private constructor(props: ${TM_FILENAME_BASE}Props, id?: string) {",
+			"        super(props, id)",
+			"    }",
+			"",
+			"    static create(props: ${TM_FILENAME_BASE}Props, id?: string): Result<${TM_FILENAME_BASE}> {}",
+			"}",
 			""
 		]
 	},
@@ -33,7 +40,8 @@
 		"scope": "javascript,typescript",
 		"prefix": "aggregate",
 		"body": [
-			"import { AggregateRoot } from \"@shared/core/AggregateRoot\"",
+			"import { Result } from '@shared/core/Result'",
+			"import { AggregateRoot } from \"@shared/domain/AggregateRoot\"",
 			"",
 			"interface ${TM_FILENAME_BASE}Props {}",
 			"",
@@ -46,7 +54,8 @@
 		"scope": "javascript,typescript",
 		"prefix": "vo",
 		"body": [
-			"import { ValueObject } from \"@shared/core/ValueObject\"",
+			"import { Result } from '@shared/core/Result'",
+			"import { ValueObject } from \"@shared/domain/ValueObject\"",
 			"",
 			"interface ${TM_FILENAME_BASE}Props {",
 			"    value: any",
@@ -57,7 +66,7 @@
 			"        super(props)",
 			"    }",
 			"",
-			"    static create(): ${TM_FILENAME_BASE} | Error {}",
+			"    static create(props: ${TM_FILENAME_BASE}Props): Result<${TM_FILENAME_BASE}> {}",
 			"}",
 			""
 		]
@@ -83,5 +92,22 @@
 		"scope": "javascript,typescript",
 		"prefix": "usecase",
 		"body": []
+	},
+
+	"Route": {
+		"scope": "javascript,typescript",
+		"prefix": "route",
+		"body": [
+			"import { Router } from 'express'",
+			"",
+			"import { controller } from '@controllers/{enter your controller}'",
+			"",
+			"const router = Router({ mergeParams: true })",
+			"",
+			"router.post('/{enter route name}', (req, res) => controller.execute(req, res))",
+			"",
+			"export default router",
+			""
+		]
 	}
 }

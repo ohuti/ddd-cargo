@@ -11,13 +11,15 @@ export abstract class Controller {
             console.error(error)
             this.fail(res, error as any)
         }
+
+        return
     }
     
     ok<T> (res: express.Response, dto?: T) {
         if (!!dto) {
             return res.status(200).json(dto)
         } else {
-            return res.sendStatus(200)
+            return res.status(200).json({ message: 'OK' })
         }
     }
     

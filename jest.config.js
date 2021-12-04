@@ -6,9 +6,12 @@ module.exports = {
   testMatch: ['**.spec.ts'],
   moduleNameMapper: {
     "@shared/(.*)": ["<rootDir>src/shared/$1"],
-    "@booking/(.*)": ["<rootDir>src/modules/booking/$1"],
-    "@incidentRegistry/(.*)": ["<rootDir>src/modules/incidentRegistry/$1"],
-    "@tracking/(.*)": ["<rootDir>src/modules/tracking/$1"],
-    "@users/(.*)": ["<rootDir>src/modules/users/$1"],
+    "@domain/(.*)": ["<rootDir>src/modules/domain/$1"],
+    "@adapters/(.*)": ["<rootDir>src/modules/adapters/$1"],
+    "@useCases/(.*)": ["<rootDir>src/modules/useCases/$1"],
+    "@repos/(.*)": ["<rootDir>src/modules/infrastructure/repos/$1"],
+    "@controllers/(.*)": ["<rootDir>src/modules/interfaces/controllers/$1"],
+
+    "@userDomain/(.*)": ["<rootDir>src/modules/domain/models/user/$1"],
   },
 }
