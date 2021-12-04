@@ -1,5 +1,5 @@
-interface Mapper<T> {
+export interface Mapper<T> {
     toDomain(data: any): T
     toDTO(data: any): any
-    toPersistence(object: T): void
+    toPersistence(object: T): any
 }

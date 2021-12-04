@@ -2,7 +2,7 @@ import { User } from '@userDomain/User'
 import { UserEmail } from '@userDomain/UserEmail'
 import { IUserRepo } from '../IUserRepo'
 
-export default class UserRepo implements IUserRepo<User> {
+export default class UserRepo implements IUserRepo {
     async emailAlreadyRegistered(email: UserEmail): Promise<boolean> {
         return email.value === 'ohuti@cargo.com.br'
     }

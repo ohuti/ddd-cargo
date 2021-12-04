@@ -45,7 +45,13 @@
 			"",
 			"interface ${TM_FILENAME_BASE}Props {}",
 			"",
-			"export class ${TM_FILENAME_BASE} extends AggregateRoot<${TM_FILENAME_BASE}Props> {}",
+			"export class ${TM_FILENAME_BASE} extends AggregateRoot<${TM_FILENAME_BASE}Props> {",
+			"    private constructor(props: ${TM_FILENAME_BASE}Props, id?: string) {",
+			"        super(props, id)",
+			"    }",
+			"",
+			"    static create(props: ${TM_FILENAME_BASE}Props, id?: string): Result<${TM_FILENAME_BASE}> {}",
+			"}",
 			""
 		]
 	},
@@ -76,10 +82,10 @@
 		"scope": "javascript,typescript",
 		"prefix": "controller",
 		"body": [
-			"import { BaseController } from '@shared/core/BaseController'",
+			"import { Controller } from '@shared/core/Controller'",
 			"import { Request, Response } from 'express'",
 			"",
-			"export class ${TM_FILENAME_BASE} extends BaseController {",
+			"export class ${TM_FILENAME_BASE} extends Controller {",
     		"    protected async executeImpl(req: Request, res: Response): Promise<void> {",
         	"        throw new Error('Method not implemented.')",
 			"    }",
@@ -94,9 +100,9 @@
 		"body": []
 	},
 
-	"Route": {
+	"POST Route": {
 		"scope": "javascript,typescript",
-		"prefix": "route",
+		"prefix": "postroute",
 		"body": [
 			"import { Router } from 'express'",
 			"",
@@ -107,6 +113,38 @@
 			"router.post('/{enter route name}', (req, res) => controller.execute(req, res))",
 			"",
 			"export default router",
+			""
+		]
+	},
+
+	"GET Route": {
+		"scope": "javascript,typescript",
+		"prefix": "getroute",
+		"body": [
+			"import { Router } from 'express'",
+			"",
+			"import { controller } from '@controllers/{enter your controller}'",
+			"",
+			"const router = Router({ mergeParams: true })",
+			"",
+			"router.get('/{enter route name}', (req, res) => controller.execute(req, res))",
+			"",
+			"export default router",
+			""
+		]
+	},
+
+	"Use Case Response": {
+		"scope": "javascript,typescript",
+		"prefix": "usecaseresponse",
+		"body": [
+			"import { Either } from '@shared/core/Either'",
+			"import { Result } from '@shared/core/Result'",
+			"",
+			"export type ${TM_FILENAME_BASE} = Either<",
+			"    Result<any>,",
+			"    Result<any>",
+			">",
 			""
 		]
 	}

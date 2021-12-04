@@ -1,3 +1,4 @@
+import { Mapper } from '@shared/core/Mapper'
 import { User } from 'modules/domain/models/user/User'
 
 export class UserMapper implements Mapper<User> {

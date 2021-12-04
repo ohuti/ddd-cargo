@@ -1,6 +1,7 @@
-import { UserEmail } from '@userDomain/UserEmail'
 import { Repo } from '@shared/core/Repo'
 
-export interface IUserRepo<User> extends Repo<User> {
+import { User } from '@userDomain/User'
+import { UserEmail } from '@userDomain/UserEmail'
+export interface IUserRepo extends Repo<User> {
     emailAlreadyRegistered (email: UserEmail): Promise<boolean>
 }

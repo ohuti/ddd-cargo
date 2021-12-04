@@ -14,10 +14,10 @@ import { User } from '@userDomain/User'
 
 import { IUserRepo } from '@repos/user/IUserRepo'
 
-export class CreateUserUseCase implements UseCase<CreateUserDTO, Promise<CreateUserResponse>> {
-    private userRepo: IUserRepo<User>
+export class CreateUserUseCase implements UseCase<CreateUserDTO, CreateUserResponse> {
+    private userRepo: IUserRepo
     
-    constructor(userRepo: IUserRepo<User>) {
+    constructor(userRepo: IUserRepo) {
         this.userRepo = userRepo
     }
 
