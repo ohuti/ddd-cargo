@@ -1,6 +1,6 @@
 import { ListAllLocationsUseCase } from './location/ListAllLocationsUseCase'
 
-import { locationRepo } from '@repos/location'
+import { locationRepo } from '@domain/repos/location'
 
 const listAllLocationsUseCase = new ListAllLocationsUseCase(locationRepo)
 

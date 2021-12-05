@@ -1,6 +1,4 @@
-import { Mapper } from '@shared/core/Mapper'
-
-import { Location } from '@domain/models/location/Location'
+import { Location } from '@locationDomain/Location'
 import { ILocationRepo } from '../ILocationRepo'
 import { LocationMapper } from '@adapters/location/LocationMapper'
 import { LocationResultDTO } from '@adapters/location/LocationDTO'
@@ -12,14 +10,8 @@ const locationList = [
 ]
 
 export default class LocationRepo implements ILocationRepo {
-    mapper: Mapper<Location>
-    
-    constructor() {
-        this.mapper = new LocationMapper()
-    }
-
     async listAll(): Promise<LocationResultDTO[]> {
-        return locationList.map(location => this.mapper.toDTO(location))
+        return locationList.map(location => LocationMapper.toDTO(location))
     }
     async exists(t: Location): Promise<boolean> {
         throw new Error('Method not implemented.');
@@ -28,7 +20,7 @@ export default class LocationRepo implements ILocationRepo {
         throw new Error('Method not implemented.');
     }
     async getById(id: string): Promise<Location> {
-        return this.mapper.toDomain(locationList.find(location => id === location.id))
+        return LocationMapper.toDomain(locationList.find(location => id === location.id))
     }
     async save(t: Location): Promise<any> {
         throw new Error('Method not implemented.');

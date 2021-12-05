@@ -1,10 +1,9 @@
 import { Result } from '@shared/core/Result'
-import { left, right } from '@shared/core/Either'
+import { Either, left, right } from '@shared/core/Either'
 import { UseCase } from '@shared/core/UseCase'
 
 import { CreateUserDTO } from '@adapters/user/CreateUserDTO'
 
-import { CreateUserResponse } from './CreateUserResponse'
 import { CreateUserErrors } from './CreatetUserErrors'
 
 import { UserEmail } from '@userDomain/UserEmail'
@@ -12,9 +11,17 @@ import { UserName } from '@userDomain/UserName'
 import { UserPassword } from '@userDomain/UserPassword'
 import { User } from '@userDomain/User'
 
-import { IUserRepo } from '@repos/user/IUserRepo'
+import { IUserRepo } from '@domain/repos/user/IUserRepo'
 
-export class CreateUserUseCase implements UseCase<CreateUserDTO, CreateUserResponse> {
+export type Response = Either<
+    CreateUserErrors.InvalidParam |
+    CreateUserErrors.EmailAlreadyRegistered |
+    CreateUserErrors.AdminCreationNotAllowed |
+    Result<any>,
+    Result<void>
+>
+
+export class CreateUserUseCase implements UseCase<CreateUserDTO, Response> {
     private userRepo: IUserRepo
     
     constructor(userRepo: IUserRepo) {
@@ -40,13 +47,13 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, CreateUserRespo
         
         if (voResult.isFailure) {
             const error = new CreateUserErrors.InvalidParam(voResult.error)
-            return left(error) as CreateUserResponse
+            return left(error) as Response
         }
 
         const emailAlreadyRegistered = await this.userRepo.emailAlreadyRegistered(emailOrError.getValue())
         if (emailAlreadyRegistered) {
             const error = new CreateUserErrors.EmailAlreadyRegistered('E-mail already registered!')
-            return left(error) as CreateUserResponse
+            return left(error) as Response
         }
         
         const userOrError = User.create({
@@ -57,6 +64,6 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, CreateUserRespo
 
         await this.userRepo.save(userOrError.getValue())
         
-        return right(Result.ok()) as CreateUserResponse
+        return right(Result.ok()) as Response
     }
 }

@@ -1,4 +1,5 @@
-import { Location } from '@domain/models/location/Location'
+import { DeliveryDateAndCostsDTO } from '@adapters/booking/BookingDTO'
+import { Location } from '@locationDomain/Location'
 import { Result } from '@shared/core/Result'
 
 const MAX_DISTANCE = 5923
@@ -8,7 +9,7 @@ const DISTANCE_PER_DAY = 150 // km per day
 
 const degreeToRadian = (degree: number) => {
     const factor = (Math.PI / 180)
-    const rad = degree/factor
+    const rad = degree * factor
 
     return rad
 }
@@ -26,15 +27,15 @@ const findDistanceBetween = (origin: Location, destination: Location) => {
     const deltaLon = (destinationLon - originLon) / 2
 
     const a = (Math.pow(Math.sin((deltaLat)), 2) + Math.cos(originLat)) * Math.cos(destinationLat) * Math.pow(Math.sin(deltaLon), 2)
-    const b = 2 * (1 / Math.tan(Math.sqrt(a) / Math.sqrt(1 - a)))
+    const b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1- a))
 
-    return earthRadius * b
+    return (earthRadius * b) + 150
 }
 
 const getDeliveryCost = (distance: number) => (distance * GAS_PRICE) / VEHICLE_EFFICIENCY
 const getEstimatedDeliveryDate = (distance: number) => Math.ceil(distance / DISTANCE_PER_DAY) + 1
 
-const calculateDeliveryDateAndPrice = (origin: Location, destination: Location): Result<any> => {
+const calculateDeliveryDateAndPrice = (origin: Location, destination: Location): Result<DeliveryDateAndCostsDTO> => {
     const distance = findDistanceBetween(origin, destination)
 
     if (distance > MAX_DISTANCE) {

@@ -1,6 +1,6 @@
 import { UseCase } from '@shared/core/UseCase'
 
-import { ILocationRepo } from '@repos/location/ILocationRepo'
+import { ILocationRepo } from '@domain/repos/location/ILocationRepo'
 
 import { LocationResultDTO } from '@adapters/location/LocationDTO'
 

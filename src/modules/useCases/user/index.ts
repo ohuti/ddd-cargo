@@ -1,6 +1,6 @@
 import { CreateUserUseCase } from './createUser/CreateUserUseCase'
 
-import { userRepo } from '@repos/user'
+import { userRepo } from '@domain/repos/user'
 
 const createUserUseCase = new CreateUserUseCase(userRepo)
 

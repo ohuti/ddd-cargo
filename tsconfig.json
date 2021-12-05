@@ -31,13 +31,22 @@
     "paths": {
       "@shared/*": ["shared/*"],
       
-      "@domain/*": ["modules/domain/*"],
-      "@repos/*": ["modules/repos/*"],
       "@adapters/*": ["modules/adapters/*"],
       "@useCases/*": ["modules/useCases/*"],
       "@controllers/*": ["modules/interfaces/controllers/*"],
+      "@domainServices/*": ["modules/domain/serivces/*"],
 
-      "@userDomain/*": ["modules/domain/models/user/*"]
+      "@userDomain/*": ["modules/domain/models/user/*"],
+      "@locationDomain/*": ["modules/domain/models/location/*"],
+      
+      "@userRepo/*": ["modules/domain/models/user/*"],
+      "@locationRepo/*": ["modules/domain/repos/location/*"],
+      
+      "@userUseCases/*": ["module/useCases/user/*"],
+      "@bookingUseCases/*": ["module/useCases/booking/*"],
+      
+      "@userControllers/*": ["module/interfaces/controllers/user/*"],
+      "@bookingControllers/*": ["module/interfaces/controllers/booking/*"],
       },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */

@@ -1,7 +1,7 @@
 import { User } from '@userDomain/User'
 import { UserEmail } from '@userDomain/UserEmail'
 
-import { IUserRepo } from '@repos/user/IUserRepo'
+import { IUserRepo } from '@domain/repos/user/IUserRepo'
 
 const registeredUsers = [
     {

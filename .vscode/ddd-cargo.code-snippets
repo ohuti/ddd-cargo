@@ -86,7 +86,7 @@
 			"import { Request, Response } from 'express'",
 			"",
 			"export class ${TM_FILENAME_BASE} extends Controller {",
-    		"    protected async executeImpl(req: Request, res: Response): Promise<void> {",
+    		"    protected async executeImpl(req: Request, res: Response): Promise<any> {",
         	"        throw new Error('Method not implemented.')",
 			"    }",
 			"}",
@@ -97,7 +97,51 @@
 	"Use Case": {
 		"scope": "javascript,typescript",
 		"prefix": "usecase",
-		"body": []
+		"body": [
+			"import { UseCase } from '@shared/core/UseCase'",
+			"",
+			"export class ${TM_FILENAME_BASE} implements UseCase<any, any> {",
+			"    constructor() {}",
+			"    ",
+			"    execute(request?: any) {",
+			"        throw new Error('Method not implemented.');",
+			"    }",
+			"}",
+			""
+		]
+	},
+
+	"Use Case Response": {
+		"scope": "javascript,typescript",
+		"prefix": "usecaseresponse",
+		"body": [
+			"import { Either } from '@shared/core/Either'",
+			"import { Result } from '@shared/core/Result'",
+			"",
+			"export type ${TM_FILENAME_BASE}Response = Either<",
+			"    Result<any>,",
+			"    Result<any>",
+			">",
+			""
+		]
+	},
+
+	"Use Case Error": {
+		"scope": "javascript,typescript",
+		"prefix": "usecaseerrors",
+		"body": [
+			"import { Result } from '@shared/core/Result'",
+			"import { UseCaseError } from '@shared/core/UseCaseError'",
+			"",
+			"export namespace ${TM_FILENAME_BASE}Errors {",
+			"    export class InvalidParam extends Result<UseCaseError> {",
+			"        constructor(message: any) {",
+			"            super(false, { message })",
+			"        }",
+			"    }",
+			"}",
+			""
+		]
 	},
 
 	"POST Route": {
@@ -130,21 +174,6 @@
 			"router.get('/{enter route name}', (req, res) => controller.execute(req, res))",
 			"",
 			"export default router",
-			""
-		]
-	},
-
-	"Use Case Response": {
-		"scope": "javascript,typescript",
-		"prefix": "usecaseresponse",
-		"body": [
-			"import { Either } from '@shared/core/Either'",
-			"import { Result } from '@shared/core/Result'",
-			"",
-			"export type ${TM_FILENAME_BASE} = Either<",
-			"    Result<any>,",
-			"    Result<any>",
-			">",
 			""
 		]
 	}

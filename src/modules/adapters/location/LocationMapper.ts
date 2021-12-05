@@ -1,9 +1,9 @@
 import { Mapper } from '@shared/core/Mapper'
-import { Location } from '@domain/models/location/Location'
+import { Location } from '@locationDomain/Location'
 import { LocationResultDTO } from './LocationDTO'
 
-export class LocationMapper implements Mapper<Location> {
-    toDomain(data: any): Location {
+export class LocationMapper implements Mapper {
+    static toDomain(data: any): Location {
         const location = Location.create({
             name: data.name,
             uf: data.uf,
@@ -13,14 +13,14 @@ export class LocationMapper implements Mapper<Location> {
 
         return location.getValue()
     }
-    toDTO(object: Location): LocationResultDTO {
+    static toDTO(object: any): LocationResultDTO {
         return {
             locationId: object.id,
             name: object.name,
             uf: object.uf
         }
     }
-    toPersistence(object: Location): any {
+    static toPersistence(object: Location): any {
         return {
             id: object.id,
             name: object.name,

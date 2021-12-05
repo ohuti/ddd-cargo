@@ -1,14 +1,14 @@
 import { Mapper } from '@shared/core/Mapper'
-import { User } from 'modules/domain/models/user/User'
+import { User } from '@userDomain/User'
 
-export class UserMapper implements Mapper<User> {
-    toPersistence(object: User): void {
+export class UserMapper implements Mapper {
+    static toPersistence(object: User): void {
         throw new Error('Method not implemented.')
     }
-    toDomain(data: any): User {
+    static toDomain(data: any): User {
         throw new Error('Method not implemented.')
     }
-    toDTO(data: any) {
+    static toDTO(data: any) {
         throw new Error('Method not implemented.')
     }
 }
