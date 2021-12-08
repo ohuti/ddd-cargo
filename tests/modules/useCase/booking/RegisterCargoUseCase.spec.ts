@@ -1,7 +1,7 @@
 import { RegisterCargoDTO } from '@adapters/booking/BookingDTO'
 import { RegisterCargoUseCase } from '@useCases/booking/registerCargo/RegisterCargoUseCase'
-import MockedCargoRepo from '../mockedRepo/MockedCargoRepo'
-import MockedLocationRepo from '../mockedRepo/MockedLocationRepo'
+import MockedCargoRepo from '../../mockedRepo/MockedCargoRepo'
+import MockedLocationRepo from '../../mockedRepo/MockedLocationRepo'
 
 let registerCargoUseCase: RegisterCargoUseCase
 

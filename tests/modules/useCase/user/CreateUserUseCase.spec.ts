@@ -1,6 +1,6 @@
 import { CreateUserDTO } from '@adapters/user/CreateUserDTO'
 import { CreateUserUseCase } from '@useCases/user/createUser/CreateUserUseCase'
-import { MockedUserRepo } from '../mockedRepo/MockedUserRepo'
+import { MockedUserRepo } from '../../mockedRepo/MockedUserRepo'
 
 let createUserUseCase: CreateUserUseCase
 
