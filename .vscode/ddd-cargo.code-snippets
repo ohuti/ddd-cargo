@@ -78,6 +78,45 @@
 		]
 	},
 
+	"Repo Interface": {
+		"scope": "javascript,typescript",
+		"prefix": "irepo",
+		"body": [
+			"import { Repo } from '@shared/core/Repo'",
+			"",
+			"export interface ${TM_FILENAME_BASE} extends Repo<T> {}",
+			""
+		]
+	},
+
+	"Repo Implementation": {
+		"scope": "javascript,typescript",
+		"prefix": "repo",
+		"body": [
+			"import { I${TM_FILENAME_BASE} } from '../I${TM_FILENAME_BASE}'",
+			"",
+			"export class ${TM_FILENAME_BASE} implements I${TM_FILENAME_BASE} {}",
+			""
+		]
+	},
+
+	"Mapper": {
+		"scope": "javascript,typescript",
+		"prefix": "mapper",
+		"body": [
+			"import { Mapper } from '@shared/core/Mapper'",
+			"",
+			"export class ${TM_FILENAME_BASE} implements Mapper {",
+			"    static toPersistence() {}",
+			"    ",
+			"    static toDTO() {}",
+			"    ",
+			"    static toDomain() {}",
+			"}",
+			""
+		]
+	},
+
 	"Controller": {
 		"scope": "javascript,typescript",
 		"prefix": "controller",
@@ -117,9 +156,10 @@
 		"body": [
 			"import { Either } from '@shared/core/Either'",
 			"import { Result } from '@shared/core/Result'",
+			"import { AppError } from '@shared/core/AppError'",
 			"",
 			"export type ${TM_FILENAME_BASE}Response = Either<",
-			"    Result<any>,",
+			"    AppError.UnexpectedError,",
 			"    Result<any>",
 			">",
 			""

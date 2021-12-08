@@ -2,10 +2,8 @@ import { Result } from '@shared/core/Result'
 import { ValueObject } from "@shared/domain/ValueObject"
 
 interface CargoUserRoleProps {
-    value: {
-        userId: string
-        role: occupations
-    }
+    userId: string
+    role: occupations
 }
 
 export class CargoUserRole extends ValueObject<CargoUserRoleProps> {
@@ -20,6 +18,6 @@ export class CargoUserRole extends ValueObject<CargoUserRoleProps> {
     }
 
     get value(): { userId: string, role: occupations } {
-        return this.props.value
+        return { userId: this.props.userId, role: this.props.role }
     }
 }

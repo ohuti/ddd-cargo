@@ -1,7 +1,7 @@
-import { User } from '@userDomain/User'
-import { UserEmail } from '@userDomain/UserEmail'
+import { User } from '@domainModels/user/User'
+import { UserEmail } from '@domainModels/user/UserEmail'
 
-import { IUserRepo } from '@domain/repos/user/IUserRepo'
+import { IUserRepo } from '@repos/user/IUserRepo'
 
 const registeredUsers = [
     {
@@ -17,7 +17,7 @@ const registeredUsers = [
     },
 ]
 
-export class MockedUserRepo implements IUserRepo<User> {
+export class MockedUserRepo implements IUserRepo {
     async exists(t: User): Promise<boolean> {
         throw new Error('Method not implemented.')
     }
@@ -31,7 +31,7 @@ export class MockedUserRepo implements IUserRepo<User> {
     }
 
     async save(t: User): Promise<any> {
-        return
+        return 'ok'
     }
 
     async emailAlreadyRegistered(email: UserEmail): Promise<boolean> {

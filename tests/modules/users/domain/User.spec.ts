@@ -1,7 +1,7 @@
-import { User } from '@userDomain/User'
-import { UserEmail } from '@userDomain/UserEmail'
-import { UserName } from '@userDomain/UserName'
-import { UserPassword } from '@userDomain/UserPassword'
+import { User } from '@domainModels/user/User'
+import { UserEmail } from '@domainModels/user/UserEmail'
+import { UserName } from '@domainModels/user/UserName'
+import { UserPassword } from '@domainModels/user/UserPassword'
 
 test('Testing Client Entity creation', () => {
     const emailVO = UserEmail.create('testing@powerrev.com')

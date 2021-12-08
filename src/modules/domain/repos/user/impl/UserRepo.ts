@@ -1,10 +1,13 @@
-import { User } from '@userDomain/User'
-import { UserEmail } from '@userDomain/UserEmail'
+import { UserMapper } from '@adapters/user/UserMapper'
+import { User } from '@domainModels/user/User'
+import { UserEmail } from '@domainModels/user/UserEmail'
 import { IUserRepo } from '../IUserRepo'
+
+const persistedUsers: any[] = []
 
 export default class UserRepo implements IUserRepo {
     async emailAlreadyRegistered(email: UserEmail): Promise<boolean> {
-        return email.value === 'ohuti@cargo.com.br'
+        return persistedUsers.filter(persistedUser => persistedUser.email === email.value).length > 0
     }
     async exists(user: User): Promise<boolean> {
         throw new Error('Method not implemented.')
@@ -13,9 +16,17 @@ export default class UserRepo implements IUserRepo {
         throw new Error('Method not implemented.')
     }
     async getById(id: string): Promise<User> {
-        throw new Error('Method not implemented.')
+        const persistedUser = persistedUsers.find(persistedUser => persistedUser.id === id) ?? null
+
+        if(!persistedUser) return persistedUser
+
+        return UserMapper.toDomain(persistedUser)
     }
     async save(user: User): Promise<any> {
-        return
+        const userToPersist = UserMapper.toPersistence(user)
+
+        persistedUsers.push(userToPersist)
+
+        return 'ok'
     }
 }

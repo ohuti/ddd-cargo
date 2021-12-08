@@ -1,32 +1,32 @@
 import { Mapper } from '@shared/core/Mapper'
-import { Location } from '@locationDomain/Location'
+import { Location } from '@domainModels/location/Location'
 import { LocationResultDTO } from './LocationDTO'
 
 export class LocationMapper implements Mapper {
-    static toDomain(data: any): Location {
+    static toDomain(raw: any): Location {
         const location = Location.create({
-            name: data.name,
-            uf: data.uf,
-            lat: data.lat,
-            lon: data.lon
-        }, data.id)
+            name: raw.name,
+            uf: raw.uf,
+            lat: raw.lat,
+            lon: raw.lon
+        }, raw.id)
 
         return location.getValue()
     }
-    static toDTO(object: any): LocationResultDTO {
+    static toDTO(location: Location): LocationResultDTO {
         return {
-            locationId: object.id,
-            name: object.name,
-            uf: object.uf
+            locationId: location.id,
+            name: location.name,
+            uf: location.uf
         }
     }
-    static toPersistence(object: Location): any {
+    static toPersistence(location: Location): any {
         return {
-            id: object.id,
-            name: object.name,
-            uf: object.uf,
-            lat: object.lat,
-            lon: object.lon
+            id: location.id,
+            name: location.name,
+            uf: location.uf,
+            lat: location.lat,
+            lon: location.lon
         }
     }
 }

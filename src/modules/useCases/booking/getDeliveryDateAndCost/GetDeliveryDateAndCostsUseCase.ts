@@ -2,10 +2,10 @@ import { Result } from '@shared/core/Result';
 import { UseCase } from '@shared/core/UseCase'
 import { Either, left, right } from '@shared/core/Either';
 
-import { ILocationRepo } from '@domain/repos/location/ILocationRepo';
+import { ILocationRepo } from '@repos/location/ILocationRepo';
 import { DeliveryDateAndCostsDTO, GetDeliveryDateAndCostsDTO } from '@adapters/booking/BookingDTO';
 
-import { calculateDeliveryDateAndPrice } from '@domain/services/CalculateDeliveryDateAndPrice';
+import { calculateDeliveryDateAndPrice } from '@domainServices/CalculateDeliveryDateAndPrice'
 
 import { GetDeliveryDateAndCostsErrorsErrors } from './GetDeliveryDateAndCostsErrors';
 

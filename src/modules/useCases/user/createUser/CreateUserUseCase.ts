@@ -6,12 +6,12 @@ import { CreateUserDTO } from '@adapters/user/CreateUserDTO'
 
 import { CreateUserErrors } from './CreatetUserErrors'
 
-import { UserEmail } from '@userDomain/UserEmail'
-import { UserName } from '@userDomain/UserName'
-import { UserPassword } from '@userDomain/UserPassword'
-import { User } from '@userDomain/User'
+import { UserEmail } from '@domainModels/user/UserEmail'
+import { UserName } from '@domainModels/user/UserName'
+import { UserPassword } from '@domainModels/user/UserPassword'
+import { User } from '@domainModels/user/User'
 
-import { IUserRepo } from '@domain/repos/user/IUserRepo'
+import { IUserRepo } from '@repos/user/IUserRepo'
 
 export type Response = Either<
     CreateUserErrors.InvalidParam |

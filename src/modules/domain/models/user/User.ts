@@ -16,8 +16,20 @@ export class User extends AggregateRoot<UserProps> {
     }
 
     static create(props: UserProps, id?: string): Result<User> {
-        const client = new User(props, id)
+        const user = new User(props, id)
 
-        return Result.ok(client)
+        return Result.ok<User>(user)
+    }
+
+    get name(): string {
+        return this.props.name.value
+    }
+
+    get email(): string {
+        return this.props.email.value
+    }
+
+    get password(): string {
+        return this.props.password.value
     }
 }
