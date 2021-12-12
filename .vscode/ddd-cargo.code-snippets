@@ -137,31 +137,23 @@
 		"scope": "javascript,typescript",
 		"prefix": "usecase",
 		"body": [
+			"import { AppError } from '@shared/core/AppError'",
+			"import { Either } from '@shared/core/Either'",
+			"import { Result } from '@shared/core/Result'",
 			"import { UseCase } from '@shared/core/UseCase'",
 			"",
-			"export class ${TM_FILENAME_BASE} implements UseCase<any, any> {",
+			"type Response = Either<",
+			"    AppError.UnexpectedError,",
+			"    Result<void>",
+			">",
+			"",
+			"export class ${TM_FILENAME_BASE} implements UseCase<any, Response> {",
 			"    constructor() {}",
 			"    ",
-			"    execute(request?: any) {",
+			"    async execute(request?: any) {",
 			"        throw new Error('Method not implemented.');",
 			"    }",
 			"}",
-			""
-		]
-	},
-
-	"Use Case Response": {
-		"scope": "javascript,typescript",
-		"prefix": "usecaseresponse",
-		"body": [
-			"import { Either } from '@shared/core/Either'",
-			"import { Result } from '@shared/core/Result'",
-			"import { AppError } from '@shared/core/AppError'",
-			"",
-			"export type ${TM_FILENAME_BASE}Response = Either<",
-			"    AppError.UnexpectedError,",
-			"    Result<any>",
-			">",
 			""
 		]
 	},

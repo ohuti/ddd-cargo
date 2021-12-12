@@ -1,6 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
 
+import './modules/subscriptions'
+
 import routes from './modules/interfaces/routes'
 
 const app = express()

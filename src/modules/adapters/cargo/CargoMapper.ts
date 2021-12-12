@@ -10,6 +10,7 @@ import { CargoDeliveryHistory } from '@domainModels/cargo/CargoDeliveryHistory'
 export class CargoMapper implements Mapper {
     static toPersistence(cargo: Cargo): any {
         return {
+            id: cargo.id,
             usersRoles: cargo.usersRoles,
             trackingId: cargo.trackingId,
             deliveryHistory: cargo.deliveryHistory,

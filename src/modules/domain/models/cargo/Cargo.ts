@@ -5,6 +5,7 @@ import { CargoDeliveryHistory } from './CargoDeliveryHistory'
 import { CargoDeliverySpecification } from './CargoDeliverySpecification'
 import { CargoTrackingId } from './CargoTrackingId'
 import { CargoUserRole } from './CargoUserRole'
+import { CargoRegistered } from './events/CargoRegistered'
 
 interface CargoProps {
     usersRoles: CargoUserRole[]
@@ -24,11 +25,13 @@ export class Cargo extends AggregateRoot<CargoProps> {
     static create(props: CargoProps, id?: string): Result<Cargo> {
         const cargo = new Cargo(props, id)
 
-        return Result.ok(cargo)
-    }
+        const idWasProvided = !!id
 
-    addDeliveryHistory (deliveryHistory: CargoDeliveryHistory) {
-        this.props.deliveryHistory.push(deliveryHistory)
+        if (!idWasProvided) {
+            cargo.addDomainEvent(new CargoRegistered(cargo))
+        }
+
+        return Result.ok(cargo)
     }
 
     get usersRoles() {

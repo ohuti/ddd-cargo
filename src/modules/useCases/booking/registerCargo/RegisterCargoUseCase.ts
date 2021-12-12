@@ -1,18 +1,23 @@
-import { RegisterCargoDTO } from '@adapters/booking/BookingDTO';
-import { Cargo } from '@domainModels/cargo/Cargo';
-import { CargoDeliveryHistory } from '@domainModels/cargo/CargoDeliveryHistory';
-import { CargoDeliverySpecification } from '@domainModels/cargo/CargoDeliverySpecification';
-import { CargoTrackingId } from '@domainModels/cargo/CargoTrackingId';
-import { CargoUserRole } from '@domainModels/cargo/CargoUserRole';
-import { ICargoRepo } from '@repos/cargo/ICargoRepo';
-import { ILocationRepo } from '@repos/location/ILocationRepo';
-import { AppError } from '@shared/core/AppError';
-import { left, right } from '@shared/core/Either';
-import { Result } from '@shared/core/Result';
+import { AppError } from '@shared/core/AppError'
+import { Either, left, right } from '@shared/core/Either'
+import { Result } from '@shared/core/Result'
 import { UseCase } from '@shared/core/UseCase'
-import { RegisterCargoResponse } from './RegisterCargoResponse';
+import { DomainEvents } from '@shared/domain/DomainEvents'
 
-export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, RegisterCargoResponse> {
+import { RegisterCargoDTO } from '@adapters/booking/BookingDTO'
+import { Cargo } from '@domainModels/cargo/Cargo'
+import { CargoDeliverySpecification } from '@domainModels/cargo/CargoDeliverySpecification'
+import { CargoTrackingId } from '@domainModels/cargo/CargoTrackingId'
+import { CargoUserRole } from '@domainModels/cargo/CargoUserRole'
+import { ICargoRepo } from '@repos/cargo/ICargoRepo'
+import { ILocationRepo } from '@repos/location/ILocationRepo'
+
+export type Response = Either<
+    AppError.UnexpectedError,
+    Result<void>
+>
+
+export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, Response> {
     private cargoRepo: ICargoRepo
     private locationRepo: ILocationRepo
 
@@ -51,7 +56,7 @@ export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, RegisterC
         if (combinedResult.isFailure) {
             const error = AppError.UnexpectedError.create(combinedResult.errorValue())
 
-            return left(error) as RegisterCargoResponse
+            return left(error) as Response
         }
 
         const nowTimestamp = new Date().getTime()
@@ -71,29 +76,15 @@ export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, RegisterC
         if (cargoOrError.isFailure) {
             const error = AppError.UnexpectedError.create(combinedResult.errorValue())
 
-            return left(error) as RegisterCargoResponse
+            return left(error) as Response
         }
 
         const cargo = cargoOrError.getValue()
 
-        const deliveryHistoryOrError = CargoDeliveryHistory.create({
-            cargoId: cargo.id,
-            eventDescription: 'Cargo registered on postoffice.',
-            occurredAt: nowTimestamp
-        })
-
-        if (deliveryHistoryOrError.isFailure) {
-            const error = AppError.UnexpectedError.create(combinedResult.errorValue())
-
-            return left(error) as RegisterCargoResponse
-        }
-
-        const deliveryHistory = deliveryHistoryOrError.getValue()
-
-        cargo.addDeliveryHistory(deliveryHistory)
-
         await this.cargoRepo.save(cargo)
 
-        return right(Result.ok<void>()) as RegisterCargoResponse
+        DomainEvents.dispatchEventsForAggregate(cargo.id)
+
+        return right(Result.ok<void>()) as Response
     }
 }
