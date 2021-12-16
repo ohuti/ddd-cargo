@@ -40,7 +40,7 @@ export class AfterCargoRegistration implements IHandle<CargoRegistered> {
         const userRole = cargo.usersRoles.find(userRole => userRole.role === 'sender')
 
         try {
-            const channelId = 'U011TP4JDSS'
+            const channelId = process.env.channelId
             const message = `Novo pacote registrado para envio com id de rastreio ${cargo.trackingId.value}.\nCaso precise entrar em contato com o remetente, use o e-mail ${userRole.user.email}`
 
             await Slack.sendMessageToChannel(channelId, message)
