@@ -3,7 +3,15 @@ import { User } from '@domainModels/user/User'
 import { UserEmail } from '@domainModels/user/UserEmail'
 import { IUserRepo } from '../IUserRepo'
 
-const persistedUsers: any[] = []
+const persistedUsers: any[] = [
+    {
+        userId: '1',   
+        name: 'André Ohuti',
+        email: 'andre@cargo.com',
+        password: '1234567890',
+        occupation: 'admin'
+    }
+]
 
 export default class UserRepo implements IUserRepo {
     async emailAlreadyRegistered(email: UserEmail): Promise<boolean> {
@@ -16,7 +24,7 @@ export default class UserRepo implements IUserRepo {
         throw new Error('Method not implemented.')
     }
     async getById(id: string): Promise<User> {
-        const persistedUser = persistedUsers.find(persistedUser => persistedUser.id === id) ?? null
+        const persistedUser = persistedUsers.find(persistedUser => persistedUser.userId === id) ?? null
 
         if(!persistedUser) return persistedUser
 

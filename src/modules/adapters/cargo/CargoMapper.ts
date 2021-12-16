@@ -6,6 +6,7 @@ import { CargoUserRole } from '@domainModels/cargo/CargoUserRole'
 import { Result } from '@shared/core/Result'
 import { AppError } from '@shared/core/AppError'
 import { CargoDeliveryHistory } from '@domainModels/cargo/CargoDeliveryHistory'
+import { User } from '@domainModels/user/User'
 
 export class CargoMapper implements Mapper {
     static toPersistence(cargo: Cargo): any {
@@ -32,8 +33,8 @@ export class CargoMapper implements Mapper {
             deliveryEstimate: raw.deliveryEstimate
         })
 
-        const usersRolesOrError = raw.usersRoles.map((userRole: { userId: string, role: occupations }) => {
-            return CargoUserRole.create({ userId: userRole.userId, role: userRole.role })
+        const usersRolesOrError = raw.usersRoles.map((userRole: { user: User, role: occupations }) => {
+            return CargoUserRole.create({ user: userRole.user, role: userRole.role })
         })
 
         const deliveryHistoryOrError = raw.deliveryHistory.map((history: any) => {

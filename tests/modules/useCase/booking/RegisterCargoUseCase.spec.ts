@@ -2,14 +2,16 @@ import { RegisterCargoDTO } from '@adapters/booking/BookingDTO'
 import { RegisterCargoUseCase } from '@useCases/booking/registerCargo/RegisterCargoUseCase'
 import MockedCargoRepo from '../../mockedRepo/MockedCargoRepo'
 import MockedLocationRepo from '../../mockedRepo/MockedLocationRepo'
+import { MockedUserRepo } from '../../mockedRepo/MockedUserRepo'
 
 let registerCargoUseCase: RegisterCargoUseCase
 
 beforeAll(() => {
     const cargoRepo = new MockedCargoRepo()
     const locationRepo = new MockedLocationRepo()
+    const userRepo = new MockedUserRepo()
 
-    registerCargoUseCase = new RegisterCargoUseCase(cargoRepo, locationRepo)
+    registerCargoUseCase = new RegisterCargoUseCase(cargoRepo, locationRepo, userRepo)
 })
 
 test('Registering new Cargo', async () => {

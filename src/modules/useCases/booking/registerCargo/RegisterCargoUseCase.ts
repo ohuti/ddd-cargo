@@ -11,6 +11,7 @@ import { CargoTrackingId } from '@domainModels/cargo/CargoTrackingId'
 import { CargoUserRole } from '@domainModels/cargo/CargoUserRole'
 import { ICargoRepo } from '@repos/cargo/ICargoRepo'
 import { ILocationRepo } from '@repos/location/ILocationRepo'
+import { IUserRepo } from '@repos/user/IUserRepo'
 
 export type Response = Either<
     AppError.UnexpectedError,
@@ -20,10 +21,12 @@ export type Response = Either<
 export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, Response> {
     private cargoRepo: ICargoRepo
     private locationRepo: ILocationRepo
+    private userRepo: IUserRepo
 
-    constructor(cargoRepo: ICargoRepo, locationRepo: ILocationRepo) {
+    constructor(cargoRepo: ICargoRepo, locationRepo: ILocationRepo, userRepo: IUserRepo) {
         this.cargoRepo = cargoRepo
         this.locationRepo = locationRepo
+        this.userRepo = userRepo
     }
     
     async execute(request: RegisterCargoDTO) {
@@ -37,6 +40,7 @@ export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, Response>
 
         const origin = await this.locationRepo.getById(originId)
         const destination = await this.locationRepo.getById(destinationId)
+        const user = await this.userRepo.getById(senderId)
 
         const trackingIdOrError = CargoTrackingId.create()
         const deliverySpecificationOrError = CargoDeliverySpecification.create({
@@ -45,7 +49,7 @@ export class RegisterCargoUseCase implements UseCase<RegisterCargoDTO, Response>
             deliveryCost,
             deliveryEstimate
         })
-        const userRoleOrError = CargoUserRole.create({ userId: senderId, role: 'sender' })
+        const userRoleOrError = CargoUserRole.create({ user, role: 'sender' })
 
         const combinedResult = Result.combine([
             trackingIdOrError,

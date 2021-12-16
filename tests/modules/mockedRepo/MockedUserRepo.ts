@@ -1,3 +1,4 @@
+import { UserMapper } from '@adapters/user/UserMapper'
 import { User } from '@domainModels/user/User'
 import { UserEmail } from '@domainModels/user/UserEmail'
 
@@ -5,11 +6,13 @@ import { IUserRepo } from '@repos/user/IUserRepo'
 
 const registeredUsers = [
     {
+        userId: '1',   
         name: 'André Ohuti',
         email: 'andre@cargo.com',
         password: '1234567890',
         occupation: 'admin'
     },{
+        userId: '2',
         name: 'Alexandre Ottoni',
         email: 'alexandre@cargo.com',
         password: '1234567890',
@@ -27,7 +30,11 @@ export class MockedUserRepo implements IUserRepo {
     }
 
     async getById(id: string): Promise<User> {
-        throw new Error('Method not implemented.')
+        const persistedUser = registeredUsers.find(persistedUser => persistedUser.userId === id) ?? null
+
+        if(!persistedUser) return
+
+        return UserMapper.toDomain(persistedUser)
     }
 
     async save(t: User): Promise<any> {
